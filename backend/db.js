@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const mongodbURI = 'mongodb://localhost:27017/?directConnection=true';
+const mongodbURI = 'mongodb://localhost:27017/keep?directConnection=true';
 
 const connectToMongo = () => {
     mongoose.connect(mongodbURI, () => {
