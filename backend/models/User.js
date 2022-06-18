@@ -21,4 +21,5 @@ const userSchema = mongoose.Schema({
 });
 
 // model name  , user schema given => used in routes 
-module.exports = mongoose.model('user' , userSchema)
+const User = mongoose.model('user', userSchema);
+module.exports = User
