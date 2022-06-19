@@ -12,7 +12,7 @@ app.get('/', (request, response) => {
 app.use(express.json()) ; // now we can send json and deal with it 
 
 //available  Routes
-app.use('/api/auth/createUser' , require('./routes/auth'))
+app.use('/api/auth/' , require('./routes/auth'))
 // app.use('/api/notes' , require('./routes/notes'))
 
 app.listen(5000, () =>{
