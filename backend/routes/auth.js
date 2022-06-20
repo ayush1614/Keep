@@ -31,24 +31,27 @@ router.post('/createUser', [
         const salt = await bcrypt.genSalt(10); // returns promise  
         let encPassword = await bcrypt.hashSync(req.body.password, salt);
 
+        // creating a new user 
         user = await User.create({
             name: req.body.name,
-            email: req.body.email,
             password: encPassword,
+            email: req.body.email,
         });
+
+        let data = {
+            user: {
+                id: user.id
+            }
+        }
+        const authToken = jwt.sign(data, process.env.JWT_SECRET); // signing the data 
+        res.json({ authToken });
 
     } catch (error) {   // error catching code 
         console.log(error);
         res.status(500).send("Internal server error");
     }
     // console.log(process.env.JWT_TOKEN);
-    let data = {
-        user: {
-            id: User.id
-        }
-    }
-    const authToken = jwt.sign(data, process.env.JWT_SECRET); // signing the data 
-    res.json({ authToken });
+
 })
 
 // AUTHENTICATE a user using :POST "api/auth/login" ,  login required
@@ -63,26 +66,31 @@ router.post('/login', [
         return res.status(400).json({ errors: errors.array() });
     }
 
+    //de structuring of data 
     const { email, password } = req.body;
 
     try {
         let user = await User.findOne({ email });
+
+        // check whether this email exists or not 
         if (!user) {
             return res.status(400).json({ error: "please try with correct credentials." });
         }
+
+        // password compare 
         let passwordCompare = await bcrypt.compare(password, user.password);
         if (!passwordCompare) {
             return res.status(400).json({ error: 'please try with correct credentials' });
         }
 
-        const payload = {
+        let data = {
             user: {
-                id: User.id
+                id: user.id
             }
         }
-
-        const authToken = jwt.sign(payload, process.env.JWT_SECRET);
+        const authToken = jwt.sign(data, process.env.JWT_SECRET); // signing the data 
         res.json({ authToken });
+
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server error");
@@ -90,12 +98,10 @@ router.post('/login', [
 })
 
 // Gives Logged In User details : POST "" , login required
-router.post('/getUser' , fetchuser, async (req, res) => {
+router.post('/getUser', fetchuser, async (req, res) => {
     try {
-        let userId = req.user.id;
-        console.log(userId) ; 
+        let userId = req.user.id; // id of that object
         const user = await User.findById(userId).select('-password'); // getting all rhe fields except password
-        // console.log(user) ; 
         res.send(user);
     } catch (error) {
         console.log(error.message);
