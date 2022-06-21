@@ -101,7 +101,7 @@ router.post('/login', [
 router.post('/getUser', fetchuser, async (req, res) => {
     try {
         let userId = req.user.id; // id of that object
-        const user = await User.findById(userId).select('-password'); // getting all rhe fields except password
+        const user = await User.findById(userId).select('-password'); // getting all the fields except password
         res.send(user);
     } catch (error) {
         console.log(error.message);
