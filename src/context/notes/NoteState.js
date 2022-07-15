@@ -25,7 +25,6 @@ const NoteState = (props) => {
     // add note 
     const addNote = async (title, description, tag) => {
         //fetch api  
-        // eslint-disable-next-line
         const response = await fetch(`${host}/api/notes/addNote/`, {
             method: 'POST',
             headers: {
@@ -34,41 +33,35 @@ const NoteState = (props) => {
             },
             body: JSON.stringify({ title, description, tag })
         });
-        console.log("adding a new note");
-        let note = {
-            "_id": "62cf36e7d4afdf2c375ebbf3",
-            "user": "62cf36b3d4afdf2c375ebbeb",
-            "title": title,
-            "description": description,
-            "tag": tag,
-            "date": "2022-06-21T13:56:36.718Z",
-            "__v": 0
-        }
+        let note = await response.json();
         setNotes(notes.concat(note));
     }
 
     // edit note 
     const editNote = async (id, title, description, tag) => {
         // fetch api  
-        // const response = await fetch(`${host}/api/notes/updateNote/${id}`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJjZjM2YjNkNGFmZGYyYzM3NWViYmViIn0sImlhdCI6MTY1Nzc0NzEyM30.HOedlC5LBlO5MZVWud0DT8lIIzTslMTgyoSCUCn_p_M'
-        //     },
-        //     body: JSON.stringify({ title, description, tag })
-        // });
-        // const json = response.json();
-
+        const response = await fetch(`${host}/api/notes/updateNote/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJjZjM2YjNkNGFmZGYyYzM3NWViYmViIn0sImlhdCI6MTY1Nzc0NzEyM30.HOedlC5LBlO5MZVWud0DT8lIIzTslMTgyoSCUCn_p_M'
+            },
+            body: JSON.stringify({ title, description, tag })
+        });
+        const json = await response.json();
+        console.log(json);
         // logic to edit 
+        let newNotes = JSON.parse(JSON.stringify(notes));
         for (let index = 0; index < notes.length; index++) {
-            const element = notes[index];
+            const element = newNotes[index];
             if (element._id === id) {
-                element.title = title;
-                element.description = description;
-                element.tag = tag;
+                newNotes[index].title = title;
+                newNotes[index].description = description;
+                newNotes[index].tag = tag;
+                break;
             }
         }
+        setNotes(newNotes);
     }
 
     //delete note 
