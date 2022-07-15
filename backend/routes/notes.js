@@ -19,8 +19,8 @@ router.get('/fetchNotes', fetchuser, async (req, res) => {
 
 // adding the new notes : POST : '/api/notes/addNotes' LOGIN Required
 router.post('/addNote', fetchuser, [
-    body('title', 'title should be 2 characters long').isLength({ min: 3 }),
-    body('description', 'description should be atleast 5 chars long').isLength({ min: 5 })
+    body('title', 'title should be 2 characters long').isLength({ min: 2 }),
+    body('description', 'description should be atleast 5 chars long').isLength({ min: 3 })
 ], async (req, res) => {
 
     //If there are errors , return Bad Request and the errors 
