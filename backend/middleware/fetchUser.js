@@ -1,5 +1,5 @@
+require('dotenv').config({path: 'backend/.env'})
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
 // middleware is a function , takes req, res and next and at end next is called 
 const fetchuser = (req, res, next) => {
@@ -10,8 +10,7 @@ const fetchuser = (req, res, next) => {
         res.status(401).send({ error: "please authenticate with valid token" })
     }
     try {
-
-        // verify thee incoming token 
+        // verify the incoming token 
         const data = jwt.verify(token, process.env.JWT_SECRET);
         req.user = data.user;
         next();
