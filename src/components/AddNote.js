@@ -29,10 +29,11 @@ export const AddNote = () => {
                     <label htmlFor="description">Description</label>
                     <input type="text" className="form-control" id="description" name="description" onChange={handleOnChange} placeholder="Enter description" />
                 </div>
-                {/* <div className="form-group form-check">
-                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-                </div> */}
+                <div className="form-group">
+                    <label htmlFor="tag">Tag</label>
+                    <input type="text" className="form-control" id="tag" name="tag" onChange={handleOnChange} placeholder="Enter description" />
+                </div>
+                
                 <button type="submit" className="btn btn-primary my-3" onClick={handleClick}>Add Note</button>
             </form>
         </div>

@@ -25,17 +25,15 @@ const NoteState = (props) => {
     // add note 
     const addNote = async (title, description, tag) => {
         //fetch api  
-        // const response = await fetch(`${host}/api/notes/addNote/`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJjZjM2YjNkNGFmZGYyYzM3NWViYmViIn0sImlhdCI6MTY1Nzc0NzEyM30.HOedlC5LBlO5MZVWud0DT8lIIzTslMTgyoSCUCn_p_M"
-        //     },
-        //     body: JSON.stringify({ title, description, tag })
-        // });
-        // const json = response.json();
-
-
+        // eslint-disable-next-line
+        const response = await fetch(`${host}/api/notes/addNote/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJjZjM2YjNkNGFmZGYyYzM3NWViYmViIn0sImlhdCI6MTY1Nzc0NzEyM30.HOedlC5LBlO5MZVWud0DT8lIIzTslMTgyoSCUCn_p_M"
+            },
+            body: JSON.stringify({ title, description, tag })
+        });
         console.log("adding a new note");
         let note = {
             "_id": "62cf36e7d4afdf2c375ebbf3",
@@ -51,7 +49,7 @@ const NoteState = (props) => {
 
     // edit note 
     const editNote = async (id, title, description, tag) => {
-        //fetch api  
+        // fetch api  
         // const response = await fetch(`${host}/api/notes/updateNote/${id}`, {
         //     method: 'POST',
         //     headers: {
@@ -74,7 +72,17 @@ const NoteState = (props) => {
     }
 
     //delete note 
-    const deleteNote = (id) => {
+    const deleteNote = async (id) => {
+        const response = await fetch(`${host}/api/notes/deleteNote/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJjZjM2YjNkNGFmZGYyYzM3NWViYmViIn0sImlhdCI6MTY1Nzc0NzEyM30.HOedlC5LBlO5MZVWud0DT8lIIzTslMTgyoSCUCn_p_M'
+            },
+        });
+        const json = await response.json();  // it parses the json , that's why it is await 
+        console.log(json);
+        setNotes(json);
         console.log("delete note " + id);
         let newNotes = notes.filter((notes) => { return notes._id !== id });
         setNotes(newNotes);
