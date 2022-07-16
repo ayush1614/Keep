@@ -1,5 +1,5 @@
 // authentication related endpoints
-require('dotenv').config();
+require('dotenv').config({path: 'backend/.env'})
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User.js')
@@ -15,17 +15,18 @@ router.post('/createUser', [
     body('password', 'password should be of atleast 7 chars long ').isLength({ min: 7 }) // password must be at least 7 chars long
 ], async (req, res) => {
 
+    let success = false;
     // validation of incoming data
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ success, errors: errors.array() });
     }
 
     //for errors
     try {
         let user = await User.findOne({ email: req.body.email }); // it's a promise
         if (user) {
-            return res.status(400).json({ error: "User already exits with this email" })
+            return res.status(400).json({ success, error: "User already exits with this email" })
         }
 
         const salt = await bcrypt.genSalt(10); // returns promise  
@@ -44,7 +45,8 @@ router.post('/createUser', [
             }
         }
         const authToken = jwt.sign(data, process.env.JWT_SECRET); // signing the data 
-        res.json({ authToken });
+        success = true;
+        res.json({ success, authToken });
 
     } catch (error) {   // error catching code 
         console.log(error);
@@ -60,13 +62,14 @@ router.post('/login', [
     body('password', 'password cannot be blank').exists()
 ], async (req, res) => {
 
+    let success = false;
     // validation of incoming data
     const errors = validationResult(req);
+    console.log(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ success, errors: errors.array() });
     }
-
-    //de structuring of data 
+    //destructuring of data 
     const { email, password } = req.body;
 
     try {
@@ -74,13 +77,13 @@ router.post('/login', [
 
         // check whether this email exists or not 
         if (!user) {
-            return res.status(400).json({ error: "please try with correct credentials." });
+            return res.status(400).json({ success, error: "please try with correct credentials." });
         }
 
         // password compare 
         let passwordCompare = await bcrypt.compare(password, user.password);
         if (!passwordCompare) {
-            return res.status(400).json({ error: 'please try with correct credentials' });
+            return res.status(400).json({ success, error: 'please try with correct credentials' });
         }
 
         let data = {
@@ -89,7 +92,8 @@ router.post('/login', [
             }
         }
         const authToken = jwt.sign(data, process.env.JWT_SECRET); // signing the data 
-        res.json({ authToken });
+        success = true;
+        res.json({ success, authToken });
 
     } catch (error) {
         console.log(error.message);
