@@ -10,6 +10,8 @@ import About from './components/About';
 import NoteState from './context/notes/NoteState';
 import Alert from './components/Alert';
 import { useState } from 'react'
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 function App() {
 
@@ -28,11 +30,13 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
-          <Alert alert={alert} />
+          <div className="container"><Alert alert={alert} /></div>
           <div className="container">
             <Routes >
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home showAlert={showAlert} />} />
               <Route exact path="/about" element={<About />} />
+              <Route exact path="/login" element={<Login showAlert={showAlert} />} />
+              <Route exact path="/signup" element={<Signup showAlert={showAlert} />} />
             </Routes>
           </div>
         </Router>
