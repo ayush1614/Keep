@@ -2,7 +2,7 @@
 This is a web based application where users can keep their ideas , notes , todos etc . Its all integrated in one single application . 
 It works on the top of MERN stack functionality  .
 It is also integrated with Google Login/SignUp functionalities . 
-It is under development including login/Signup functionlaity .
+It is under development including login/Signup functionlaity with other functionalities.
 
 
 ## Available Scripts
