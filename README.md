@@ -1,24 +1,22 @@
 # Getting Started with Create React App
-This is a web based application where users can keep their ideas , notes , todos etc . Its all integrated
-in one single application . 
+This is a web based application where users can keep their ideas , notes , todos etc . Its all integrated in one single application . 
 It works on the top of MERN stack functionality  .
 It is also integrated with Google Login/SignUp functionalities . 
-It is under development . 
+It is under development including login/Signup functionlaity .
 
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run both`
 
+Install all the packages using  ###`npm i` and then `npm run both` because of concurrent package for starting of frontend and backend simultaneously
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The page will not reload when user make changes.\
+User may also see any lint errors in the console.
 
 ### `npm test`
 
