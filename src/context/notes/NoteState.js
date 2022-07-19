@@ -13,14 +13,12 @@ const NoteState = (props) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJjZjM2YjNkNGFmZGYyYzM3NWViYmViIn0sImlhdCI6MTY1Nzc0NzEyM30.HOedlC5LBlO5MZVWud0DT8lIIzTslMTgyoSCUCn_p_M'
+                'auth-token': localStorage.getItem('token')
             },
         });
         const json = await response.json();  // it parses the json , that's why it is await 
-        console.log(json);
         setNotes(json);
     }
-
 
     // add note 
     const addNote = async (title, description, tag) => {
@@ -29,7 +27,7 @@ const NoteState = (props) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJjZjM2YjNkNGFmZGYyYzM3NWViYmViIn0sImlhdCI6MTY1Nzc0NzEyM30.HOedlC5LBlO5MZVWud0DT8lIIzTslMTgyoSCUCn_p_M"
+                "auth-token": localStorage.getItem('token')
             },
             body: JSON.stringify({ title, description, tag })
         });
@@ -44,15 +42,15 @@ const NoteState = (props) => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJjZjM2YjNkNGFmZGYyYzM3NWViYmViIn0sImlhdCI6MTY1Nzc0NzEyM30.HOedlC5LBlO5MZVWud0DT8lIIzTslMTgyoSCUCn_p_M'
+                'auth-token': localStorage.getItem('token')
             },
             body: JSON.stringify({ title, description, tag })
         });
+         //eslint-disable-next-line
         const json = await response.json();
-        console.log(json);
         // logic to edit 
         let newNotes = JSON.parse(JSON.stringify(notes));
-        for (let index = 0; index < notes.length; index++) {
+        for (let index = 0; index < newNotes.length; index++) {
             const element = newNotes[index];
             if (element._id === id) {
                 newNotes[index].title = title;
@@ -70,13 +68,11 @@ const NoteState = (props) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJjZjM2YjNkNGFmZGYyYzM3NWViYmViIn0sImlhdCI6MTY1Nzc0NzEyM30.HOedlC5LBlO5MZVWud0DT8lIIzTslMTgyoSCUCn_p_M'
+                'auth-token': localStorage.getItem('token')
             },
         });
+        //eslint-disable-next-line
         const json = await response.json();  // it parses the json , that's why it is await 
-        console.log(json);
-        setNotes(json);
-        console.log("delete note " + id);
         let newNotes = notes.filter((notes) => { return notes._id !== id });
         setNotes(newNotes);
     }

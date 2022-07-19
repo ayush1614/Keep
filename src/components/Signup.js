@@ -23,10 +23,11 @@ const Signup = (props) => {
       body: JSON.stringify({ name, email, password })
     });
     const json = await response.json();
-    console.log(json);
+    // console.log(json);
 
     if (json.success) {
-      localStorage.setItem('token', json.authtoken);
+      // console.log(json.authToken);
+      localStorage.setItem('token', json.authToken);
       navigate('/');
       props.showAlert('Account Created Successfully', 'success');
     }
@@ -35,8 +36,8 @@ const Signup = (props) => {
     }
   }
   return (
-    <div className="container my-3">
-      <h3>SignUp</h3>
+    <div className="container mt-2">
+      <h3>Create an account to use Keep</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group my-1">
           <label htmlFor="name">Name</label>
@@ -51,7 +52,7 @@ const Signup = (props) => {
           <input type="password" className="form-control" id="password" name='password' onChange={handleOnChange} placeholder="Password" minLength={7} required />
         </div>
         <div className="form-group my-2">
-          <label htmlFor="cpassword">cPassword</label>
+          <label htmlFor="cpassword">Confirm Password</label>
           <input type="password" className="form-control" id="cpassword" name='cpassword' onChange={handleOnChange} placeholder="cPassword" minLength={7} required />
         </div>
 

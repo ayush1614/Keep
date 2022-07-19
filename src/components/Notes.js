@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import noteContext from '../context/notes/noteContext'
 import { AddNote } from './AddNote';
 import { NoteItem } from './NoteItem';
@@ -7,8 +8,14 @@ export const Notes = (props) => {
     const context = useContext(noteContext);
     const { notes, getNotes, editNote } = context;
 
+    let navigate = useNavigate();
     useEffect(() => {
-        getNotes();
+        // if token is set then redirect to add notes page  else navigate to login page 
+        if (localStorage.getItem('token')) {
+            getNotes();
+        }
+        else
+            navigate('/login');
         // eslint-disable-next-line
     }, []);
     const ref = useRef(null);
@@ -21,7 +28,7 @@ export const Notes = (props) => {
     }
 
     const handleClick = (e) => {
-        console.log('updating the not ' + note);
+        // console.log('updating the not ' + note);
         editNote(note.id, note.etitle, note.edescription, note.etag);
         refClose.current.click();
         props.showAlert('Updated Successfully', 'success');
