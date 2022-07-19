@@ -51,10 +51,10 @@ const Signup = (props) => {
           <label htmlFor="password">Password</label>
           <input type="password" className="form-control" id="password" name='password' onChange={handleOnChange} placeholder="Password" minLength={7} required />
         </div>
-        <div className="form-group my-2">
+        {/* <div className="form-group my-2">
           <label htmlFor="cpassword">Confirm Password</label>
           <input type="password" className="form-control" id="cpassword" name='cpassword' onChange={handleOnChange} placeholder="cPassword" minLength={7} required />
-        </div>
+        </div> */}
 
         <button type="submit" className='btn btn-primary' >SignUp</button>
       </form>
