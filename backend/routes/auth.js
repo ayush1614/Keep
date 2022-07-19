@@ -30,7 +30,7 @@ router.post('/createUser', [
         }
 
         const salt = await bcrypt.genSalt(10); // returns promise  
-        let encPassword = await bcrypt.hashSync(req.body.password, salt);
+        let encPassword =  bcrypt.hashSync(req.body.password, salt);
 
         // creating a new user 
         user = await User.create({
@@ -49,10 +49,9 @@ router.post('/createUser', [
         res.json({ success, authToken });
 
     } catch (error) {   // error catching code 
-        console.log(error);
+        // console.log(error);
         res.status(500).send("Internal server error");
     }
-    // console.log(process.env.JWT_TOKEN);
 
 })
 
@@ -65,7 +64,6 @@ router.post('/login', [
     let success = false;
     // validation of incoming data
     const errors = validationResult(req);
-    console.log(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ success, errors: errors.array() });
     }
@@ -96,7 +94,7 @@ router.post('/login', [
         res.json({ success, authToken });
 
     } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
         res.status(500).send("Internal Server error");
     }
 })
@@ -108,7 +106,7 @@ router.post('/getUser', fetchuser, async (req, res) => {
         const user = await User.findById(userId).select('-password'); // getting all the fields except password
         res.send(user);
     } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
         res.status(500).send("Internal Server Error");
     }
 })

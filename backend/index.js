@@ -21,7 +21,7 @@ app.use('/api/notes', require('./routes/notes'))
 
 app.listen(process.env.PORT || 5000, () => {
     // console.log(process.env.JWT_SECRET);
-    console.log("Listening on port 5000");
+    // console.log("Listening on port 5000");
 })
 
 
