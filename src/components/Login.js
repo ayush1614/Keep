@@ -19,10 +19,11 @@ const Login = (props) => {
             body: JSON.stringify({ email: credentials.email, password: credentials.password })
         });
         const json = await response.json();
-        console.log(json);
+        // console.log(json);
 
         if (json.success) {
-            localStorage.setItem('token', json.authtoken);
+            // console.log(json.authToken);
+            localStorage.setItem('token', json.authToken);
             navigate('/');
             props.showAlert('LogIn Successfull', 'success');
         }
@@ -32,7 +33,7 @@ const Login = (props) => {
     }
     return (
         <div className="container my-3">
-            <h3>Login</h3>
+            <h3>Login to continue to Keep</h3>
             <form onSubmit={handleSubmit}>
                 <div className="form-group my-1">
                     <label htmlFor="email">Email address</label>
