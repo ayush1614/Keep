@@ -29,10 +29,10 @@ const Signup = (props) => {
       // console.log(json.authToken);
       localStorage.setItem('token', json.authToken);
       navigate('/');
-      props.showAlert('Account Created Successfully', 'success');
+      props.showAlert('Account Created Successfully');
     }
     else {
-      props.showAlert('Credentials not valid ', 'danger');
+      props.showAlert(json.error);
     }
   }
   return (
